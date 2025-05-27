@@ -41,3 +41,18 @@ static: install phpspec phpstan
 # Example execution: make profile url=http://app
 profile:
 	docker compose exec blackfire blackfire curl -L $(url)
+
+.PHONY: docker-up
+docker-up:
+	@set -e; \
+	PORT=80; \
+	if nc -z localhost $$PORT 2>/dev/null; then \
+	for P in $$(seq 8080 8099); do \
+	if ! nc -z localhost $$P 2>/dev/null; then \
+	PORT=$$P; \
+	break; \
+	fi; \
+	done; \
+	fi; \
+	echo "Starting application on port $$PORT"; \
+	APP_PORT=$$PORT docker compose up -d
