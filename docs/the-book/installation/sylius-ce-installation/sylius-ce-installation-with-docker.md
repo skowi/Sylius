@@ -40,3 +40,7 @@ make init
 open http://localhost/
 ```
 {% endcode %}
+
+If port `80` is already in use, you can spin up the environment again
+with `make docker-up`. This command will automatically bind the
+application to the first free port starting from `8080`.
